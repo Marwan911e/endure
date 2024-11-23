@@ -20,29 +20,46 @@ To get started with **Endure**, follow the steps below:
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/marwan911e/endure.git
-Set up your environment:
+# Firebase Integration for Android App
 
-Install Android Studio if you haven’t already.
-Set up Firebase for your project by following the instructions on the Firebase console. Make sure to enable Firebase Authentication, Realtime Database, and Cloud Messaging.
-Configure Firebase in the app:
+This guide will walk you through setting up Firebase in your Android project and running the app with Firebase Authentication, Realtime Database, and Cloud Messaging.
 
-Download the google-services.json file from the Firebase console and place it in the app/ folder of your project.
-Add the Firebase SDK to your build.gradle files:
-In the project-level build.gradle:
-gradle
-Copy code
-classpath 'com.google.gms:google-services:4.3.15'
-In the app-level build.gradle:
-gradle
-Copy code
-apply plugin: 'com.google.gms.google-services'
-dependencies {
-    implementation 'com.google.firebase:firebase-auth:21.1.0'
-    implementation 'com.google.firebase:firebase-database:20.2.3'
-    implementation 'com.google.firebase:firebase-messaging:23.0.0'
+## Prerequisites
+- Android Studio installed on your machine.
+- A Firebase project set up in the Firebase console.
+
+## Step 1: Install Android Studio
+If you haven’t already, install Android Studio by following the [official installation guide](https://developer.android.com/studio).
+
+## Step 2: Set up Firebase for your project
+Follow these instructions to set up Firebase for your Android project:
+1. Go to the [Firebase Console](https://console.firebase.google.com/).
+2. Create a new Firebase project or select an existing one.
+3. Add your Android app to the Firebase project by registering your app's package name.
+4. Enable the following Firebase services:
+   - Firebase Authentication
+   - Firebase Realtime Database
+   - Firebase Cloud Messaging
+
+## Step 3: Configure Firebase in the App
+
+### 1. Download the `google-services.json` file
+- Go to the Firebase console, navigate to your project settings, and download the `google-services.json` file.
+- Place the `google-services.json` file in the `app/` folder of your Android project.
+
+### 2. Update the `build.gradle` files
+
+#### Project-level `build.gradle` (located in the root of your project)
+
+```gradle
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // Add the following classpath in the dependencies block
+        classpath 'com.google.gms:google-services:4.3.15' 
+    }
 }
-Run the app:
 
-Open the project in Android Studio.
-Build and run the app on an emulator or physical device.
-You will be prompted to sign in with your Firebase credentials to sync data across devices.
