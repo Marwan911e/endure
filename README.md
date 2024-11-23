@@ -40,12 +40,6 @@ To get started with **Endure**, follow these simple steps:
    - Connect your Android device or use an emulator.
    - Press the **Run** button in Android Studio to launch the app and start tracking your journey.
 
-## 📱 Screenshots
-
-![Endure App Screenshot](link-to-screenshot)
-
----
-
 ### 🌱 Let's Grow Stronger Together!  
 Join the **Endure** community and begin your path to strength, resilience, and personal growth. We’re here to support you, one step at a time!
 
