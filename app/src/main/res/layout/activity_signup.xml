@@ -158,17 +158,17 @@
   <com.google.android.material.button.MaterialButton
       android:id="@+id/loginButton"
       android:layout_width="220dp"
-      android:layout_height="48dp"
+      android:layout_height="60dp"
       android:backgroundTint="@android:color/transparent"
       android:text="Already have an account? Login now."
-      android:textSize="10dp"
+      android:textSize="13dp"
       app:cornerRadius="22px"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.495"
+      app:layout_constraintHorizontal_bias="0.497"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.869"
+      app:layout_constraintVertical_bias="0.895"
       tools:ignore="MissingConstraints,TextSizeCheck" />
 
 
