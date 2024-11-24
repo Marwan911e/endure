@@ -12,11 +12,11 @@
 
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/signupButton2"
+        android:id="@+id/loginButton"
         android:layout_width="240dp"
         android:layout_height="50dp"
         android:backgroundTint="#272f9f"
-        android:text="Sign up"
+        android:text="Log in"
         app:cornerRadius="22px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/emailField2"
+        android:id="@+id/emailField"
         android:layout_width="240dp"
         android:layout_height="48dp"
         android:background="@drawable/rounded_textview"
@@ -109,7 +109,7 @@
         app:layout_constraintVertical_bias="0.532" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/loginButton"
+        android:id="@+id/createAccountButton"
         android:layout_width="240dp"
         android:layout_height="60dp"
         android:backgroundTint="@android:color/transparent"
