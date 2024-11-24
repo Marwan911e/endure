@@ -17,15 +17,19 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SignupActivity"
+            android:exported="true"/>
 
         <activity
-            android:name=".HomeScreen"
-            android:exported="true">
+            android:name=".LoginActivity"
+            android:exported="true"/>
 
-        </activity>
+
     </application>
 
 </manifest>
