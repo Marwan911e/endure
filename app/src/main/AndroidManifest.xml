@@ -12,21 +12,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Endure"
         tools:targetApi="31" >
+
+        <!-- Set exported to true so the activity can be accessed -->
         <activity
             android:name=".SignupActivity"
-            android:exported="false" />
+            android:exported="true" />
+
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="true" />
+
+        <!-- MainActivity as the launcher activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
