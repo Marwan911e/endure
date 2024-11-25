@@ -35,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
                 // Proceed with login logic (placeholder for now)
                 Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                 // Actual login logic here
+                Intent intent = new Intent(LoginActivity.this, HomeScreen.class);
+                startActivity(intent);
             }
         });
 
