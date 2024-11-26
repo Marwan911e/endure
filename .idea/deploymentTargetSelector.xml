@@ -2,7 +2,17 @@
 <project version="4">
   <component name="deploymentTargetSelector">
     <selectionStates>
+      <SelectionState runConfigName="app">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+<<<<<<< HEAD
       <SelectionState runConfigName="SplashScreen">
+=======
+      <SelectionState runConfigName="SignupActivity">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="LoginActivity">
+>>>>>>> 14b2dd9276c37cb8bd088fa15ef2a97f80e24a87
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

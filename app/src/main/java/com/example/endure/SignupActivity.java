@@ -57,9 +57,19 @@ public class SignupActivity extends AppCompatActivity {
                 // Simulate a signup success (you can replace this with actual signup logic)
                 Toast.makeText(SignupActivity.this, "Signup successful!", Toast.LENGTH_SHORT).show();
                 // Optionally, proceed to the next activity after signup
-                // Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
-                // startActivity(intent);
+                 Intent intent = new Intent(SignupActivity.this, HomeScreen.class);
+                startActivity(intent);
+
+                // Get the entered username
+                username = usernameField.getText().toString().trim();
+
+                // Create an intent to go to the HomeScreen
+                Intent intent2 = new Intent(SignupActivity.this, HomeScreen.class);
+                intent.putExtra("USERNAME", username); // Pass the username
+                startActivity(intent); // Start HomeScreen
+                finish(); // Close the SignUpActivity
             }
+
         });
 
         // Set the login button click listener (navigate to the login screen)
