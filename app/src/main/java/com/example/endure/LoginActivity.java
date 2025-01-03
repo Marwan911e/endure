@@ -8,16 +8,22 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailField, passwordField;
     private MaterialButton loginButton, signupButton;
+    private FirebaseAuth mAuth; // FirebaseAuth instance
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Initialize FirebaseAuth
+        mAuth = FirebaseAuth.getInstance();
 
         // Initialize fields and buttons
         emailField = findViewById(R.id.emailField);
@@ -32,11 +38,8 @@ public class LoginActivity extends AppCompatActivity {
 
             // Validate the email and password
             if (validateInput(email, password)) {
-                // Proceed with login logic (placeholder for now)
-                Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
-                // Actual login logic here
-                Intent intent = new Intent(LoginActivity.this, HomeScreen.class);
-                startActivity(intent);
+                // Proceed with login logic
+                loginUser(email, password);
             }
         });
 
@@ -64,5 +67,25 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    // Firebase login method
+    private void loginUser(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Login successful, navigate to HomeScreen
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginActivity.this, HomeScreen.class);
+                            startActivity(intent);
+                            finish(); // Close LoginActivity
+                        }
+                    } else {
+                        // If login fails, show a message to the user
+                        Toast.makeText(LoginActivity.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
