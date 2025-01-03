@@ -90,10 +90,10 @@
         android:background="@drawable/rounded_card"
         app:layout_constraintBottom_toTopOf="@+id/AddWorkoutButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view2"
-        app:layout_constraintVertical_bias="0.536" />
+        app:layout_constraintVertical_bias="0.551" />
 
     <View
         android:id="@+id/view3"
