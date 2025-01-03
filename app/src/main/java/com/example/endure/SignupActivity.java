@@ -8,23 +8,39 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.android.material.button.MaterialButton;
 
 public class SignupActivity extends AppCompatActivity {
 
     private EditText usernameField, emailField, passwordField;
     private MaterialButton signupButton, loginButton;
+    private FirebaseAuth mAuth; // FirebaseAuth instance
+    private FirebaseDatabase database; // Firebase Realtime Database instance
+    private DatabaseReference usersRef; // Reference to "users" node in Firebase Database
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_signup);
+
+        // Initialize FirebaseAuth and Firebase Database
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        usersRef = database.getReference("users");
 
         // Initialize the fields and buttons
         usernameField = findViewById(R.id.usernameField);
@@ -54,22 +70,38 @@ public class SignupActivity extends AppCompatActivity {
             } else if (!isValidPassword(password)) {
                 Toast.makeText(SignupActivity.this, "Password must be at least 8 characters long, contain an uppercase letter, a lowercase letter, and a special character!", Toast.LENGTH_SHORT).show();
             } else {
-                // Simulate a signup success (you can replace this with actual signup logic)
-                Toast.makeText(SignupActivity.this, "Signup successful!", Toast.LENGTH_SHORT).show();
-                // Optionally, proceed to the next activity after signup
-                 Intent intent = new Intent(SignupActivity.this, HomeScreen.class);
-                startActivity(intent);
+                // Firebase sign up
+                mAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = mAuth.getCurrentUser();
 
-                // Get the entered username
-                username = usernameField.getText().toString().trim();
+                                    // Create a new user object with the necessary details
+                                    User newUser = new User(username, email);
 
-                // Create an intent to go to the HomeScreen
-                Intent intent2 = new Intent(SignupActivity.this, HomeScreen.class);
-                intent.putExtra("USERNAME", username); // Pass the username
-                startActivity(intent); // Start HomeScreen
-                finish(); // Close the SignUpActivity
+                                    // Save the user data in Firebase Database under "users" node
+                                    usersRef.child(user.getUid()).setValue(newUser)
+                                            .addOnCompleteListener(databaseTask -> {
+                                                if (databaseTask.isSuccessful()) {
+                                                    Toast.makeText(SignupActivity.this, "Signup successful!", Toast.LENGTH_SHORT).show();
+                                                    // Navigate to the next activity
+                                                    Intent intent = new Intent(SignupActivity.this, HomeScreen.class);
+                                                    intent.putExtra("USERNAME", username); // Pass the username
+                                                    startActivity(intent);
+                                                    finish(); // Close SignupActivity
+                                                } else {
+                                                    Toast.makeText(SignupActivity.this, "Failed to save user data.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
+                                } else {
+                                    Toast.makeText(SignupActivity.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
-
         });
 
         // Set the login button click listener (navigate to the login screen)
