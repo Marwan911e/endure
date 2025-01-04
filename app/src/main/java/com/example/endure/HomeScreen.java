@@ -1,5 +1,12 @@
 package com.example.endure;
 
+import androidx.work.Constraints;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+
+
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +28,8 @@ public class HomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_screen);
+
+
 
         // Adjust for system bars
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -47,6 +56,7 @@ public class HomeScreen extends AppCompatActivity {
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView welcomeMessage = findViewById(R.id.welcomeMessage);
         welcomeMessage.setText("Welcome, " + username + "!"); // Display the username
     }
+
 }
 
 

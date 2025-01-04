@@ -29,6 +29,9 @@ public class LoginActivity extends AppCompatActivity {
         signupButton = findViewById(R.id.createAccountButton);
         forgotPasswordLabel = findViewById(R.id.forgetpasswordbutton);
 
+
+
+
         loginButton.setOnClickListener(v -> {
             String email = emailField.getText().toString().trim();
             String password = passwordField.getText().toString().trim();
@@ -41,7 +44,12 @@ public class LoginActivity extends AppCompatActivity {
         signupButton.setOnClickListener(v -> {
             Toast.makeText(LoginActivity.this, "Navigating to Signup", Toast.LENGTH_SHORT).show();
             // Implement signup activity navigation logic here
+
+            Intent intent = new Intent(LoginActivity.this, SignupActivity.class); // Your HomeScreen activity
+            startActivity(intent);
+            finish();
         });
+
 
         forgotPasswordLabel.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
@@ -67,6 +75,9 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
                         // Navigate to HomeScreen logic here
+                        Intent intent = new Intent(LoginActivity.this, HomeScreen.class); // Your HomeScreen activity
+                        startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(LoginActivity.this, "Authentication failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
