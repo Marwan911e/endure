@@ -126,4 +126,22 @@
         tools:ignore="MissingConstraints,TextSizeCheck" />
 
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/forgetpasswordbutton"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@android:color/transparent"
+        android:text="forgot Password"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:cornerRadius="22px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.98"
+        tools:ignore="MissingConstraints,TextSizeCheck" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
