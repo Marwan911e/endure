@@ -13,32 +13,40 @@
         android:theme="@style/Theme.Endure"
         tools:targetApi="31">
 
-        <activity
-            android:name=".NotificationWorker"
-            android:exported="false"
-            tools:ignore="Instantiatable" />
-
-        <activity
-            android:name=".ForgotPasswordActivity"
-            android:exported="false" />
+        <!-- Main activity with intent-filter -->
         <activity
             android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false" />
+
         <activity
             android:name=".SignupActivity"
             android:exported="true" />
+
         <activity
             android:name=".HomeScreen"
             android:exported="true" />
+
         <activity
             android:name=".LoginActivity"
             android:exported="true" />
     </application>
-
 </manifest>

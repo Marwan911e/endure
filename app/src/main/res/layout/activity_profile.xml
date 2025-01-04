@@ -1,0 +1,62 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/nameField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your name"
+        android:inputType="textPersonName"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/addressField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your address"
+        android:inputType="textPostalAddress"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/ageField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your age"
+        android:inputType="number"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/heightField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your height (cm)"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/weightField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your weight (kg)"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/targetWeightField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your target weight (kg)"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save" />
+
+</LinearLayout>
