@@ -25,13 +25,7 @@
 
         <activity
             android:name=".ProfileActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
+            android:exported="true" />
 
         <activity
             android:name=".ForgotPasswordActivity"
@@ -47,6 +41,11 @@
 
         <activity
             android:name=".LoginActivity"
+            android:exported="true" />
+
+        <!-- Add Workout Activity -->
+        <activity
+            android:name=".AddWorkout"
             android:exported="true" />
     </application>
 </manifest>
