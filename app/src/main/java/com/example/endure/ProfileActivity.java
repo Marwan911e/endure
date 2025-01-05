@@ -5,10 +5,7 @@ import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -17,22 +14,11 @@ public class ProfileActivity extends AppCompatActivity {
     private EditText nameField, addressField, ageField, heightField, weightField, targetWeightField;
     private Button saveButton;
     private DatabaseReference databaseReference;
-    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
-        // Initialize Firebase Auth
-        auth = FirebaseAuth.getInstance();
-
-        // Check if the user is authenticated
-        if (auth.getCurrentUser() == null) {
-            Toast.makeText(this, "User not authenticated. Please log in.", Toast.LENGTH_SHORT).show();
-            finish(); // Exit the activity if the user is not authenticated
-            return;
-        }
 
         // Initialize Firebase Database reference
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
@@ -46,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
         targetWeightField = findViewById(R.id.targetWeightField);
         saveButton = findViewById(R.id.saveButton);
 
-        // Load existing user data from Firebase
+        // Check if data already exists and populate fields if it does
         loadUserData();
 
         // Handle Save button click
@@ -54,10 +40,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void loadUserData() {
-        String userId = auth.getCurrentUser().getUid();
+        // Implement logic to retrieve user data from Firebase and populate fields
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         databaseReference.child(userId).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful() && task.getResult() != null && task.getResult().exists()) {
+            if (task.isSuccessful() && task.getResult().exists()) {
                 // Populate fields with user data
                 nameField.setText(task.getResult().child("name").getValue(String.class));
                 addressField.setText(task.getResult().child("address").getValue(String.class));
@@ -65,12 +52,8 @@ public class ProfileActivity extends AppCompatActivity {
                 heightField.setText(task.getResult().child("height").getValue(String.class));
                 weightField.setText(task.getResult().child("weight").getValue(String.class));
                 targetWeightField.setText(task.getResult().child("targetWeight").getValue(String.class));
-            } else {
-                Toast.makeText(this, "No user data found.", Toast.LENGTH_SHORT).show();
             }
-        }).addOnFailureListener(e ->
-                Toast.makeText(this, "Failed to load data: " + e.getMessage(), Toast.LENGTH_SHORT).show()
-        );
+        });
     }
 
     private void saveUserData() {
@@ -88,29 +71,22 @@ public class ProfileActivity extends AppCompatActivity {
             return;
         }
 
-        // Create a UserProfile object
+        // Save data to Firebase
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         UserProfile userProfile = new UserProfile(name, address, age, height, weight, targetWeight);
 
-        // Save data to Firebase
-        String userId = auth.getCurrentUser().getUid();
         databaseReference.child(userId).setValue(userProfile).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(ProfileActivity.this, "Profile saved successfully", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(ProfileActivity.this, "Failed to save profile: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }).addOnFailureListener(e ->
-                Toast.makeText(this, "Error saving data: " + e.getMessage(), Toast.LENGTH_SHORT).show()
-        );
+        });
     }
 
     // Define a model class for user profile
     public static class UserProfile {
         public String name, address, age, height, weight, targetWeight;
-
-        public UserProfile() {
-            // Default constructor required for calls to DataSnapshot.getValue(UserProfile.class)
-        }
 
         public UserProfile(String name, String address, String age, String height, String weight, String targetWeight) {
             this.name = name;
