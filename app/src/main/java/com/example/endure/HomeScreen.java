@@ -1,17 +1,13 @@
 package com.example.endure;
 
 import androidx.work.Constraints;
-import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
-
-
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +25,7 @@ public class HomeScreen extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_screen);
 
-
+        triggerNotificationWorker();
 
         // Adjust for system bars
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -49,6 +45,16 @@ public class HomeScreen extends AppCompatActivity {
             finish(); // Close the current activity
         });
 
+        // Find the Profile button
+        MaterialButton profileButton = findViewById(R.id.ProfileButton);
+
+        // Set up the OnClickListener for the profile button
+        profileButton.setOnClickListener(v -> {
+            // Redirect to ProfileActivity
+            Intent intent = new Intent(HomeScreen.this, ProfileActivity.class);
+            startActivity(intent);
+        });
+
         // Retrieve the username from the Intent
         String username = getIntent().getStringExtra("USERNAME");
 
@@ -57,6 +63,8 @@ public class HomeScreen extends AppCompatActivity {
         welcomeMessage.setText("Welcome, " + username + "!"); // Display the username
     }
 
+    private void triggerNotificationWorker() {
+        OneTimeWorkRequest notificationWorkRequest = new OneTimeWorkRequest.Builder(NotificationWorker.class).build();
+        WorkManager.getInstance(this).enqueue(notificationWorkRequest);
+    }
 }
-
-
