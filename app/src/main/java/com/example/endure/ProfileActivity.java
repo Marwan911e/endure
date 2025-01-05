@@ -1,6 +1,5 @@
 package com.example.endure;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -13,7 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ProfileActivity extends AppCompatActivity {
 
     private EditText nameField, addressField, ageField, heightField, weightField, targetWeightField;
-    private Button saveButton, goToHomeButton;
+    private Button saveButton;
     private DatabaseReference databaseReference;
 
     @Override
@@ -21,14 +20,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-
-
-        // Handle "Go to Home" button click
-        goToHomeButton.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, HomeScreen.class);
-            startActivity(intent);
-            finish(); // Optional: Call finish to prevent returning to this activity with back button
-        });
         // Initialize Firebase Database reference
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
@@ -40,22 +31,21 @@ public class ProfileActivity extends AppCompatActivity {
         weightField = findViewById(R.id.weightField);
         targetWeightField = findViewById(R.id.targetWeightField);
         saveButton = findViewById(R.id.saveButton);
-        goToHomeButton = findViewById(R.id.goToHomeButton);
 
         // Check if data already exists and populate fields if it does
         loadUserData();
 
-
         // Handle Save button click
         saveButton.setOnClickListener(v -> saveUserData());
-
     }
 
     private void loadUserData() {
+        // Implement logic to retrieve user data from Firebase and populate fields
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         databaseReference.child(userId).get().addOnCompleteListener(task -> {
             if (task.isSuccessful() && task.getResult().exists()) {
+                // Populate fields with user data
                 nameField.setText(task.getResult().child("name").getValue(String.class));
                 addressField.setText(task.getResult().child("address").getValue(String.class));
                 ageField.setText(task.getResult().child("age").getValue(String.class));
@@ -67,6 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void saveUserData() {
+        // Validate inputs
         String name = nameField.getText().toString().trim();
         String address = addressField.getText().toString().trim();
         String age = ageField.getText().toString().trim();
@@ -80,6 +71,7 @@ public class ProfileActivity extends AppCompatActivity {
             return;
         }
 
+        // Save data to Firebase
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         UserProfile userProfile = new UserProfile(name, address, age, height, weight, targetWeight);
 
@@ -92,6 +84,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
+    // Define a model class for user profile
     public static class UserProfile {
         public String name, address, age, height, weight, targetWeight;
 
