@@ -1,11 +1,14 @@
 package com.example.endure;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -78,6 +81,11 @@ public class ProfileActivity extends AppCompatActivity {
         databaseReference.child(userId).setValue(userProfile).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(ProfileActivity.this, "Profile saved successfully", Toast.LENGTH_SHORT).show();
+
+                // Navigate to the HomeScreen activity
+                Intent intent = new Intent(ProfileActivity.this, HomeScreen.class);
+                startActivity(intent);
+                finish(); // Close the current activity so the user can't go back to it
             } else {
                 Toast.makeText(ProfileActivity.this, "Failed to save profile: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
