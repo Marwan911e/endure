@@ -53,6 +53,13 @@ public class HomeScreen extends AppCompatActivity {
             startActivity(intent);
         });
 
+        MaterialButton AddWorkoutButton = findViewById(R.id.AddWorkoutButton);
+        AddWorkoutButton.setOnClickListener(v -> {
+            // Redirect to ProfileActivity
+            Intent intent = new Intent(HomeScreen.this, AddWorkout.class);
+            startActivity(intent);
+        });
+
         // Retrieve the username from the Intent
         String username = getIntent().getStringExtra("USERNAME");
 
