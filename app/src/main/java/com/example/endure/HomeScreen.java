@@ -1,19 +1,20 @@
 package com.example.endure;
 
-import androidx.work.Constraints;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
-
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.TextView;
+import java.util.concurrent.TimeUnit;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.work.Constraints;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -25,6 +26,7 @@ public class HomeScreen extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_screen);
 
+        // Trigger the NotificationWorker when the HomeScreen activity starts
         triggerNotificationWorker();
 
         // Adjust for system bars
@@ -36,8 +38,6 @@ public class HomeScreen extends AppCompatActivity {
 
         // Find the LogoutButton
         MaterialButton logoutButton = findViewById(R.id.LogoutButton);
-
-        // Set up the OnClickListener for the logout button
         logoutButton.setOnClickListener(v -> {
             // Redirect to LoginActivity
             Intent intent = new Intent(HomeScreen.this, LoginActivity.class);
@@ -47,20 +47,9 @@ public class HomeScreen extends AppCompatActivity {
 
         // Find the Profile button
         MaterialButton profileButton = findViewById(R.id.ProfileButton);
-
-        // Set up the OnClickListener for the profile button
         profileButton.setOnClickListener(v -> {
             // Redirect to ProfileActivity
             Intent intent = new Intent(HomeScreen.this, ProfileActivity.class);
-            startActivity(intent);
-        });
-
-        MaterialButton addWorkoutButton = findViewById(R.id.AddWorkoutButton);
-
-        // Set up the OnClickListener for the profile button
-        addWorkoutButton.setOnClickListener(v -> {
-            // Redirect to ProfileActivity
-            Intent intent = new Intent(HomeScreen.this, AddWorkout.class);
             startActivity(intent);
         });
 
@@ -72,22 +61,18 @@ public class HomeScreen extends AppCompatActivity {
         welcomeMessage.setText("Welcome, " + username + "!"); // Display the username
     }
 
-
     private void triggerNotificationWorker() {
-        // Add constraints for the Worker if needed
+        // Add constraints for the Worker if needed (e.g., only run when connected to Wi-Fi)
         Constraints constraints = new Constraints.Builder()
                 .setRequiresCharging(false) // Modify based on your requirements
                 .build();
 
-        // Create the WorkRequest
-        OneTimeWorkRequest notificationWorkRequest = new OneTimeWorkRequest.Builder(NotificationWorker.class)
+        // Create the PeriodicWorkRequest with a 5-second repeat interval
+        PeriodicWorkRequest notificationWorkRequest = new PeriodicWorkRequest.Builder(NotificationWorker.class, 5, TimeUnit.SECONDS)
                 .setConstraints(constraints)
                 .build();
 
-        // Enqueue the WorkRequest
+        // Enqueue the PeriodicWorkRequest
         WorkManager.getInstance(this).enqueue(notificationWorkRequest);
     }
-
-
 }
-

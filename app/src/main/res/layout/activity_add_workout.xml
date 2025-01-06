@@ -31,15 +31,18 @@
         android:id="@+id/editTextText7"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:inputType="text"
         android:minHeight="48dp"
         android:text="reps and sets"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextText2" />
+        app:layout_constraintTop_toBottomOf="@id/editTextText2"
+        app:layout_constraintVertical_bias="0.057" />
 
     <Button
         android:id="@+id/button"
@@ -49,24 +52,28 @@
         android:backgroundTint="#ffffff"
         android:text="Add"
         android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextText8" />
+        app:layout_constraintTop_toBottomOf="@id/editTextText8"
+        app:layout_constraintVertical_bias="0.076" />
 
     <EditText
         android:id="@+id/editTextText8"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
         android:inputType="text"
         android:minHeight="48dp"
         android:text="maximum weight"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextText7" />
+        app:layout_constraintTop_toBottomOf="@id/editTextText7"
+        app:layout_constraintVertical_bias="0.089" />
 
     <Button
         android:id="@+id/goToHomeButton"
@@ -81,7 +88,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.77" />
+        app:layout_constraintVertical_bias="0.816" />
 
     <EditText
         android:id="@+id/editTextText2"
@@ -92,6 +99,7 @@
         android:inputType="text"
         android:minHeight="48dp"
         android:text="workout name"
+        android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

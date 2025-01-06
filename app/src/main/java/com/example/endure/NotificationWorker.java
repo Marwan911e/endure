@@ -27,15 +27,17 @@ public class NotificationWorker extends Worker {
 
         // Build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                // Replace with your icon
                 .setContentTitle("Fitness Motivation")
                 .setContentText("Stay active! Remember to crush your fitness goals today!")
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setSmallIcon(R.drawable.__removebg_preview);  // Ensure you have an icon in your drawable folder
 
         // Show the notification
         NotificationManager notificationManager = (NotificationManager) getApplicationContext()
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(NOTIFICATION_ID, builder.build());
+        if (notificationManager != null) {
+            notificationManager.notify(NOTIFICATION_ID, builder.build());
+        }
 
         return Result.success();
     }
@@ -48,7 +50,6 @@ public class NotificationWorker extends Worker {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
 
-            // Register the channel with the system
             NotificationManager notificationManager = getApplicationContext()
                     .getSystemService(NotificationManager.class);
             if (notificationManager != null) {
