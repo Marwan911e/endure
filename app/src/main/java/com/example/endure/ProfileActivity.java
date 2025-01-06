@@ -76,15 +76,15 @@ public class ProfileActivity extends AppCompatActivity {
             return;
         }
 
-        MaterialButton goToHomeButton = findViewById(R.id.goToHomeButton);
 
-        // Set up the OnClickListener for the profile button
+        // Go to Home screen when the button is clicked
+        View goToHomeButton = findViewById(R.id.goToHomeButton);  // New Button
+
         goToHomeButton.setOnClickListener(v -> {
-            // Redirect to ProfileActivity
             Intent intent = new Intent(ProfileActivity.this, HomeScreen.class);
-            startActivity(intent);
+            startActivity(intent);  // Start HomeScreen activity
+            finish();  // Close the current activity
         });
-
         // Save data to Firebase
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         UserProfile userProfile = new UserProfile(name, address, age, height, weight, targetWeight);
