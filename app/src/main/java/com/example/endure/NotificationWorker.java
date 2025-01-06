@@ -1,15 +1,10 @@
 package com.example.endure;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
 import android.os.Build;
-import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.work.Worker;
@@ -17,7 +12,7 @@ import androidx.work.WorkerParameters;
 
 public class NotificationWorker extends Worker {
 
-    private static final String CHANNEL_ID = "network_notification";
+    private static final String CHANNEL_ID = "fitness_motivation_channel";
     private static final int NOTIFICATION_ID = 1;
 
     public NotificationWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
@@ -27,56 +22,38 @@ public class NotificationWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        if (isOnline()) {
-            Log.d("NotificationWorker", "Network is online. Showing notification.");
-            showNotification("Network Connected", "You're now online. Enjoy the app!");
-            return Result.success();
-        } else {
-            Log.d("NotificationWorker", "Network is offline. Skipping notification.");
-            return Result.failure();
-        }
-    }
+        // Create the notification channel
+        createNotificationChannel();
 
-    private boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                NetworkCapabilities capabilities = cm.getNetworkCapabilities(cm.getActiveNetwork());
-                return capabilities != null && (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR));
-            } else {
-                return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
-            }
-        }
-        return false;
-    }
-
-    @SuppressLint("NotificationPermission")
-    private void showNotification(String title, String message) {
-        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(
-                    CHANNEL_ID,
-                    "Network Notifications",
-                    NotificationManager.IMPORTANCE_HIGH
-            );
-            notificationManager.createNotificationChannel(channel);
-        }
-
+        // Build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-                .setSmallIcon(R.drawable.baseline_announcement_24)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setAutoCancel(true);
+                // Replace with your icon
+                .setContentTitle("Fitness Motivation")
+                .setContentText("Stay active! Remember to crush your fitness goals today!")
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (getApplicationContext().checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                Log.e("NotificationWorker", "Notification permission not granted.");
-                return;
+        // Show the notification
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext()
+                .getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+
+        return Result.success();
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Fitness Motivation";
+            String description = "Channel for fitness motivation notifications";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            // Register the channel with the system
+            NotificationManager notificationManager = getApplicationContext()
+                    .getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
             }
         }
-
-        notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 }
