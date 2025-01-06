@@ -55,6 +55,15 @@ public class HomeScreen extends AppCompatActivity {
             startActivity(intent);
         });
 
+        MaterialButton addWorkoutButton = findViewById(R.id.AddWorkoutButton);
+
+        // Set up the OnClickListener for the profile button
+        addWorkoutButton.setOnClickListener(v -> {
+            // Redirect to ProfileActivity
+            Intent intent = new Intent(HomeScreen.this, AddWorkout.class);
+            startActivity(intent);
+        });
+
         // Retrieve the username from the Intent
         String username = getIntent().getStringExtra("USERNAME");
 
@@ -63,8 +72,22 @@ public class HomeScreen extends AppCompatActivity {
         welcomeMessage.setText("Welcome, " + username + "!"); // Display the username
     }
 
+
     private void triggerNotificationWorker() {
-        OneTimeWorkRequest notificationWorkRequest = new OneTimeWorkRequest.Builder(NotificationWorker.class).build();
+        // Add constraints for the Worker if needed
+        Constraints constraints = new Constraints.Builder()
+                .setRequiresCharging(false) // Modify based on your requirements
+                .build();
+
+        // Create the WorkRequest
+        OneTimeWorkRequest notificationWorkRequest = new OneTimeWorkRequest.Builder(NotificationWorker.class)
+                .setConstraints(constraints)
+                .build();
+
+        // Enqueue the WorkRequest
         WorkManager.getInstance(this).enqueue(notificationWorkRequest);
     }
+
+
 }
+
